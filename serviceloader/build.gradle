@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    compileOnly project(':serviceprovider')
+}
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            pom.project {
+//                groupId 'cn.rock.spi'
+//                artifactId 'serviceloader'
+//                version '0.0.1'
+//            }
+//            repository(url: uri('../repo'))
+//        }
+//    }
+//}
+

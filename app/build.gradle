@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+apply plugin: 'cn.rock.spi'
+
+android {
+    compileSdkVersion 32
+
+    defaultConfig {
+        applicationId "cn.rock.spi"
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation 'cn.rock.spi:serviceloader:0.0.1'
+}

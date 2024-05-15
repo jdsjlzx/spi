@@ -1,0 +1,4 @@
+rootProject.name = "Spi"
+include ':app'
+include ':serviceprovider'
+include ':serviceloader'
