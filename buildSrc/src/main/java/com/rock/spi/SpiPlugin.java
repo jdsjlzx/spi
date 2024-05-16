@@ -24,10 +24,13 @@ public class SpiPlugin implements Plugin<Project> {
                 }
 
                 AppExtension android = p.getExtensions().findByType(AppExtension.class);
-                for (ApplicationVariant variant : android.getApplicationVariants()) {
-                    final File spiRoot = p.file(getSpiRootPath(p, variant));
-                    final File dstDir = variant.getJavaCompile().getDestinationDir();
-                    final FileCollection classPath = p.files(android.getBootClasspath(), variant.getJavaCompile().getClasspath(), dstDir);
+                for (var variant : android.getApplicationVariants()) {
+                    final File spiRoot = project.file(getSpiRootPath(project, variant));
+                    System.out.println("SpiPlugin spiRoot " + spiRoot.getAbsolutePath());
+                    final File dstDir = variant.getJavaCompileProvider().get().getDestinationDirectory().get().getAsFile();
+                    System.out.println("SpiPlugin dstDir " + dstDir.getAbsolutePath());
+                    final FileCollection classPath = project.files(android.getBootClasspath(), variant.getJavaCompileProvider().get().getClasspath(), dstDir);
+                    System.out.println("SpiPlugin classPath " + classPath.getAsPath());
                     SpiTask spiTask = p.getTasks().create(newTaskName(variant), SpiTask.class, new Action<SpiTask>() {
                         @Override
                         public void execute(SpiTask task) {
@@ -42,10 +45,12 @@ public class SpiPlugin implements Plugin<Project> {
                             });
                         }
                     });
-                    spiTask.mustRunAfter(variant.getJavaCompile());
-                    variant.getAssemble().dependsOn(spiTask);
-                    if (variant.getInstall() != null) {
-                        variant.getInstall().dependsOn(spiTask);
+                    spiTask.mustRunAfter(variant.getJavaCompileProvider().get());
+                    variant.getAssembleProvider().get().dependsOn(spiTask);
+                    if (variant.getInstallProvider() != null) {
+                        Task task = variant.getInstallProvider().get();
+                        System.out.println("SpiPlugin task " + task.toString());
+                        task.dependsOn(spiTask);
                     }
                 }
             }
