@@ -12,6 +12,28 @@ dependencies {
     compileOnly project(':serviceprovider')
 }
 
+//Gradle 7.0以上（也可以）
+/*afterEvaluate {
+    publishing {
+        //配置maven-publishing插件的输出物
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = 'cn.rock.spi'
+                artifactId = 'serviceloader'
+                version = '0.0.1'
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+                url = uri('../repo')
+            }
+        }
+    }
+}*/
+
+//Gradle 7.0以下
 //uploadArchives {
 //    repositories {
 //        mavenDeployer {
@@ -25,3 +47,28 @@ dependencies {
 //    }
 //}
 
+
+//官方推荐配置
+group = 'cn.rock.spi'
+version = '0.0.1'
+
+//java {
+//    withJavadocJar()
+//    withSourcesJar()
+//}
+
+//gradle 官方文档：https://docs.gradle.org/current/userguide/publishing_maven.html#publishing_maven:complete_example
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'serviceloader'
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = uri('../repo')
+            println("maven url $url")
+        }
+    }
+}
