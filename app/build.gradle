@@ -29,5 +29,5 @@ android {
 
 dependencies {
 
-    implementation 'cn.rock.spi:serviceloader:0.0.1'
+    implementation 'cn.rock.spi:serviceloader:0.0.2'
 }

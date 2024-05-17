@@ -27,6 +27,7 @@ public class AnnotationFilter {
 
         while (!stack.isEmpty()) {
             final File f = stack.pop();
+            System.out.println("AnnotationFilter filterService f  " + f.toString());
             if (f.isDirectory()) {
                 final File[] files = f.listFiles();
                 if (files != null) {
@@ -90,15 +91,18 @@ public class AnnotationFilter {
 
         String clzName = "L" + getASMClzName(ServiceProviderInterface.class) + ";";
         for (AnnotationNode node : annotations) {
+            System.out.println("AnnotationFilter AnnotationNode  " + node.toString());
             List<Object> values = node.values;
             if (values == null || !(clzName.equals(node.desc))) {
                 continue;
             }
             for (Object v : values) {
+                System.out.println("AnnotationFilter node.values  v " + v);
                 if (!(v instanceof List)) {
                     continue;
                 }
                 Type type = ((List<Type>) v).get(0);
+                System.out.println("AnnotationFilter type " + type);
                 String infName = type.getClassName();
                 map.put(infName, getJavaCLzName(classNode.name));
             }

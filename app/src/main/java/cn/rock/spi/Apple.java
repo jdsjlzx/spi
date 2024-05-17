@@ -2,7 +2,7 @@ package cn.rock.spi;
 
 import android.util.Log;
 
-@ServiceProviderInterface(Foo.class)
+@ServiceProviderInterface(Apple.class)
 public class Apple implements Foo {
 
     @Override

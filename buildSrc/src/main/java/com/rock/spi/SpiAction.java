@@ -51,7 +51,7 @@ public class SpiAction {
             for (Map.Entry<String, String> entry : services.entrySet()) {
                 String infName = entry.getKey();
                 String implName = entry.getValue();
-
+                System.out.println("SpiAction getServices entry.getKey()  " + entry.getKey() + "  entry.getValue() " + entry.getValue());
                 final File spi = new File(servicesDir, infName);
                 PrintWriter writer = new PrintWriter(new FileWriter(spi, true));
                 writer.printf(implName).println();
@@ -68,6 +68,7 @@ public class SpiAction {
     private Map<String, String> newCallables(Map<String, String> services) throws Exception {
         Map<String, String> map = new HashMap<>();
         for (Map.Entry<String, String> entry : services.entrySet()) {
+            System.out.println("SpiAction newCallables entry.getKey()  " + entry.getKey() + "  entry.getValue() " + entry.getValue());
             String implName = entry.getValue();
             String callableClassName = implName.substring(implName.lastIndexOf(".") + 1) + "Callable";
             byte[] bytes = CallableDump.generateCallable(packageName + "/" + callableClassName, implName);

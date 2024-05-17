@@ -46,6 +46,7 @@ public class SpiPlugin implements Plugin<Project> {
                         }
                     });
                     spiTask.mustRunAfter(variant.getJavaCompileProvider().get());
+                    spiTask.mustRunAfter(":app:dexBuilderDebug");
                     variant.getAssembleProvider().get().dependsOn(spiTask);
                     if (variant.getInstallProvider() != null) {
                         Task task = variant.getInstallProvider().get();

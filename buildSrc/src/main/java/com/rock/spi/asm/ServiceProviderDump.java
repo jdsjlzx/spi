@@ -18,7 +18,7 @@ public class ServiceProviderDump implements Opcodes {
         cw.visit(V1_8, ACC_PUBLIC + ACC_SUPER + ACC_ABSTRACT, "cn/rock/spi/ServiceProvider", null, "java/lang/Object", null);
 
         {
-            fv = cw.visitField(ACC_PRIVATE + ACC_FINAL + ACC_STATIC, "sProviders", "Ljava/util/Map;", "Ljava/util/Map<Ljava/lang/Class<*>;Ljava/util/concurrent/Callable<*>;>;", null);
+            fv = cw.visitField(ACC_PUBLIC+ ACC_FINAL + ACC_STATIC, "sProviders", "Ljava/util/Map;", "Ljava/util/Map<Ljava/lang/Class<*>;Ljava/util/concurrent/Callable<*>;>;", null);
             fv.visitEnd();
         }
         {
@@ -64,6 +64,7 @@ public class ServiceProviderDump implements Opcodes {
 
             //注册Callable
             for (Map.Entry<String, String> entry : callMap.entrySet()) {
+                System.out.println("ServiceProviderDump entry.getKey()  " + entry.getKey() + "  entry.getValue() " + entry.getValue());
                 String key = entry.getKey().replace(".", "/");
                 String value = entry.getValue().replace(".", "/");
                 mv.visitLdcInsn(Type.getType("L" + key + ";"));

@@ -15,7 +15,8 @@ public class MainActivity extends Activity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Foo foo = ServiceLoader.load(Foo.class).get();
+
+                Foo foo = ServiceLoader.load(Banana.class).get();
                 foo.eat();
             }
         });

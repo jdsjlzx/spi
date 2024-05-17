@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 public abstract class ServiceProvider {
 
-    private static final Map<Class<?>, Callable<?>> sProviders = new LinkedHashMap<>();
+    public static final Map<Class<?>, Callable<?>> sProviders = new LinkedHashMap<>();
 
     private ServiceProvider() {
     }
