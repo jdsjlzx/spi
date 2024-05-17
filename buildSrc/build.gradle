@@ -5,7 +5,7 @@ plugins {
 
 repositories {
     maven {
-        url 'E:\\github\\spi\\repo'
+        url '/Users/zhixian/Documents/git/spi/repo'
     }
     google()
     mavenCentral()
@@ -29,5 +29,6 @@ dependencies {
     implementation 'org.ow2.asm:asm:9.6'
     implementation 'org.ow2.asm:asm-tree:9.6'
     implementation 'com.android.tools.build:gradle:7.4.2'
-    implementation 'cn.rock.spi:serviceloader:0.0.2'
+
+    implementation 'cn.rock.spi:serviceloader:0.0.3'
 }

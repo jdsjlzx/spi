@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceConfigurationError;
-import java.util.concurrent.Callable;
 
 /**
  * @param <S> 服务接口类
@@ -45,12 +44,7 @@ public final class ServiceLoader<S> {
      */
     private S load() {
         try {
-            System.out.println("ServiceLoader load " + mService);
-            Map<Class<?>, Callable<?>> providers = ServiceProvider.sProviders;
-            for (Map.Entry<Class<?>, Callable<?>> entry : providers.entrySet()) {
-                System.out.println("ServiceLoader entry.getKey()  " + entry.getKey() + "  entry.getValue() " + entry.getValue());
-            }
-
+            System.out.println("ServiceLoader load mService " + mService);
             WeakReference<S> reference = mProviderCache.get(mService);
             if (reference != null && reference.get() != null) {
                 return reference.get();

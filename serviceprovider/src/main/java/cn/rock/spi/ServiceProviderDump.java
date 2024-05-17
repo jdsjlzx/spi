@@ -1,22 +1,18 @@
-package com.rock.spi.asm;
-
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-
-import java.util.Map;
+package cn.rock.spi;
+import org.objectweb.asm.*;
 
 public class ServiceProviderDump implements Opcodes {
 
-    public static byte[] dump(Map<String, String> callMap) throws Exception {
+    public static byte[] dump () throws Exception {
+
         ClassWriter cw = new ClassWriter(0);
         FieldVisitor fv;
         MethodVisitor mv;
+        AnnotationVisitor av0;
 
         cw.visit(V1_8, ACC_PUBLIC + ACC_SUPER + ACC_ABSTRACT, "cn/rock/spi/ServiceProvider", null, "java/lang/Object", null);
+
+        cw.visitInnerClass("java/util/Map$Entry", "java/util/Map", "Entry", ACC_PUBLIC + ACC_STATIC + ACC_ABSTRACT + ACC_INTERFACE);
 
         {
             fv = cw.visitField(ACC_PUBLIC + ACC_FINAL + ACC_STATIC, "sProviders", "Ljava/util/Map;", "Ljava/util/Map<Ljava/lang/Class<*>;Ljava/util/concurrent/Callable<*>;>;", null);
@@ -104,27 +100,16 @@ public class ServiceProviderDump implements Opcodes {
             mv.visitInsn(DUP);
             mv.visitMethodInsn(INVOKESPECIAL, "java/util/LinkedHashMap", "<init>", "()V", false);
             mv.visitFieldInsn(PUTSTATIC, "cn/rock/spi/ServiceProvider", "sProviders", "Ljava/util/Map;");
-
-            //注册Callable
-            /*mv.visitLdcInsn(Type.getType("Lcn/rock/spi/Apple;"));
+            mv.visitLdcInsn(Type.getType("Lcn/rock/spi/Apple;"));
             mv.visitTypeInsn(NEW, "cn/rock/spi/AppleCallable");
             mv.visitInsn(DUP);
             mv.visitMethodInsn(INVOKESPECIAL, "cn/rock/spi/AppleCallable", "<init>", "()V", false);
-            mv.visitMethodInsn(INVOKESTATIC, "cn/rock/spi/ServiceProvider", "register", "(Ljava/lang/Class;Ljava/util/concurrent/Callable;)V", false);*/
-
-            //注册多个Callable
-            for (Map.Entry<String, String> entry : callMap.entrySet()) {
-                System.out.println("ServiceProviderDump entry.getKey()  " + entry.getKey() + "  entry.getValue() " + entry.getValue());
-                String key = entry.getKey().replace(".", "/");
-                String value = entry.getValue().replace(".", "/");
-                mv.visitLdcInsn(Type.getType("L" + key + ";"));
-                mv.visitTypeInsn(NEW, value);
-                mv.visitInsn(DUP);
-                mv.visitMethodInsn(INVOKESPECIAL, value, "<init>", "()V", false);
-                mv.visitMethodInsn(INVOKESTATIC, "cn/rock/spi/ServiceProvider", "register", "(Ljava/lang/Class;Ljava/util/concurrent/Callable;)V", false);
-            }
-
-            //System.out.println("ServiceProvider init sProviders size " + sProviders.entrySet().size());
+            mv.visitMethodInsn(INVOKESTATIC, "cn/rock/spi/ServiceProvider", "register", "(Ljava/lang/Class;Ljava/util/concurrent/Callable;)V", false);
+            mv.visitLdcInsn(Type.getType("Lcn/rock/spi/Banana;"));
+            mv.visitTypeInsn(NEW, "cn/rock/spi/BananaCallable");
+            mv.visitInsn(DUP);
+            mv.visitMethodInsn(INVOKESPECIAL, "cn/rock/spi/BananaCallable", "<init>", "()V", false);
+            mv.visitMethodInsn(INVOKESTATIC, "cn/rock/spi/ServiceProvider", "register", "(Ljava/lang/Class;Ljava/util/concurrent/Callable;)V", false);
             mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
             mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
             mv.visitInsn(DUP);
@@ -137,7 +122,6 @@ public class ServiceProviderDump implements Opcodes {
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(I)Ljava/lang/StringBuilder;", false);
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
-
             mv.visitInsn(RETURN);
             mv.visitMaxs(3, 0);
             mv.visitEnd();

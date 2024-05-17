@@ -50,7 +50,7 @@ dependencies {
 
 //官方推荐配置
 group = 'cn.rock.spi'
-version = '0.0.2'
+version = '0.0.3'
 
 //java {
 //    withJavadocJar()

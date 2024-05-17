@@ -16,12 +16,18 @@ public abstract class ServiceProvider {
     }
 
     static synchronized <S> S newProvider(final Class<S> service) throws Exception {
+        System.out.println("ServiceProvider newProvider service  " + service);
+        for (Map.Entry<Class<?>, Callable<?>> entry : sProviders.entrySet()) {
+            System.out.println("ServiceProvider newProvider provider entry.getKey()  " + entry.getKey() + "  entry.getValue() " + entry.getValue());
+        }
         //调用Callable#call获取实例
         return (S) sProviders.get(service).call();
     }
 
     static {
         // kv方式添加service接口名以及Callable对象
-//        register(Object.class, new Object());
+        register(Apple.class, new AppleCallable());
+        register(Banana.class, new BananaCallable());
+        System.out.println("ServiceProvider init sProviders size " + sProviders.entrySet().size());
     }
 }
