@@ -8,3 +8,9 @@ maven {
 Android中SPI思想应用与改进
 
 https://blog.csdn.net/jdsjlzx/article/details/129474806
+
+
+第一次运行可能会崩溃，属于正常现象。第二次运行就好了
+
+Foo foo = ServiceLoader.load(Banana.class).get();
+foo.eat();
